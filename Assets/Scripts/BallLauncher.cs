@@ -5,6 +5,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using EZCameraShake;
+using UnityEngine.EventSystems;
 
 public class BallLauncher : MonoBehaviour
 {
@@ -50,10 +51,10 @@ public class BallLauncher : MonoBehaviour
     private bool PointerDown;
     private bool isDoubleUsed = false;
     private bool isExplosiveUsed = false;
+    [SerializeField] private bool shootable;
 
     private void Awake()
     {
-
         _blockSpawner = FindObjectOfType<RowSpawner>();
         _canMove = true;
         _canDrag = false;
@@ -70,6 +71,7 @@ public class BallLauncher : MonoBehaviour
 
     public void EndDrag()
     {
+
         if (angle >= angleMin && angle <= angleMax)
         {
             StartCoroutine(LaunchBalls());
@@ -139,6 +141,7 @@ public class BallLauncher : MonoBehaviour
     {
         _canDrag = false;
         _startPosition = this.transform.position;
+
     }
     public void PointerD()
     {
@@ -158,13 +161,28 @@ public class BallLauncher : MonoBehaviour
         ray = Physics2D.Raycast(transform.position, transform.right, 15f, layerWall);
         ray.point = worldPosition1;
     }
+    private bool IsPointerOverUIObject()
+    {
+         PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
+    }
+    
     private void Update()
     {
+        //if (EventSystem.current.IsPointerOverGameObject())
+        //{
+        //    return;
+        //}
+        
+
         if (!_canMove) return;
 
         if (PointerDown == true)
         {
-
+             
             ray = Physics2D.Raycast(transform.position, transform.right, 15f, layerWall);
             Vector2 reflectPos = Vector2.Reflect(new Vector3(ray.point.x, ray.point.y) - transform.position, ray.normal);
             Vector3 pos = Camera.main.WorldToScreenPoint(transform.position);
@@ -179,13 +197,17 @@ public class BallLauncher : MonoBehaviour
                 ContinueDragSlider(worldPosition1);
                 EndDrag();
             }
-            Debug.DrawRay(transform.position, worldPosition1, Color.red);
-
+            //Debug.DrawRay(transform.position, worldPosition1, Color.red);
         }
         else
         {
             if (Input.GetMouseButton(0))
             {
+                if (IsPointerOverUIObject())
+                {
+                    angle = 180f;
+                    return;
+                }
                 ray = Physics2D.Raycast(transform.position, transform.right, 15f, layerWall);
                 Vector2 reflectPos = Vector2.Reflect(new Vector3(ray.point.x, ray.point.y) - transform.position, ray.normal);
                 Vector3 pos = Camera.main.WorldToScreenPoint(transform.position);
@@ -214,8 +236,7 @@ public class BallLauncher : MonoBehaviour
                 transform.rotation = Quaternion.AngleAxis(angle, transform.forward);
                 Vector3 worldPosition2 = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 ContinueDrag(worldPosition2);
-                Debug.DrawRay(transform.position, worldPosition2, Color.green);
-
+                //Debug.DrawRay(transform.position, worldPosition2, Color.green);
             }
             else if (Input.GetMouseButtonUp(0))
             {
@@ -260,12 +281,12 @@ public class BallLauncher : MonoBehaviour
 
     public GameObject bottomWall;
 
- 
+
 
     public void ResetBall()
     {
         stop = true;
-        
+
         foreach (GameObject go in _ballsList)
         {
             if (go != null)

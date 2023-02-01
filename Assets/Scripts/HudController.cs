@@ -20,7 +20,7 @@ public class HudController : MonoBehaviour
     {
         //score = 0;
         //scoreText.text = score.ToString();
-      
+       
 
     }
     public void UpdateScore()
@@ -49,7 +49,6 @@ public class HudController : MonoBehaviour
     {
         Time.timeScale = 1;
         pauseMenu.SetActive(false); 
-
     }
     public void RestartGame()
     {
