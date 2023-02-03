@@ -13,9 +13,9 @@ public class Dialogue : MonoBehaviour
     public float textSpeed;
     public BallLauncher ballLauncher;
     public GameObject spawnerParent;
-    public Button pauseButton;
-    public Button doubleBalls;
-    public Button explosiveBall;
+    public Button btnPause;
+    public Button btnX2Balls;
+    public Button btnBoom;
     public GameObject slider;
 
 
@@ -27,9 +27,9 @@ public class Dialogue : MonoBehaviour
         StartDialogue();
         ballLauncher.GetComponent<BallLauncher>()._canMove = false;
         spawnerParent.SetActive(false);
-        pauseButton.interactable= false;
-        doubleBalls.interactable= false;
-        explosiveBall.interactable= false;
+        btnPause.interactable= false;
+        btnX2Balls.interactable= false;
+        btnBoom.interactable= false;
         slider.SetActive(false);
 
     }
@@ -75,9 +75,9 @@ public class Dialogue : MonoBehaviour
             ballLauncher.GetComponent<BallLauncher>()._canMove = true;
             gameObject.SetActive(false);
             spawnerParent.SetActive(true);
-            pauseButton.interactable = true;
-            doubleBalls.interactable = true;
-            explosiveBall.interactable = true;
+            btnPause.interactable = true;
+            btnX2Balls.interactable = true;
+            btnBoom.interactable = true;
             slider.SetActive(true);
             return;
         }

@@ -7,9 +7,11 @@ using UnityEngine.UI;
 
 public class LevelButton : MonoBehaviour
 {
-    public int sceneIndex;
-     public void OpenScene()
+    public int levelIndex;
+    public int levelValue;
+    public void OpenScene()
     {
-        SceneManager.LoadScene(sceneIndex+1);
+        SceneManager.LoadScene("Gameplay");
+        PlayerPrefs.SetInt("levelIndex",levelValue);
      }
 }

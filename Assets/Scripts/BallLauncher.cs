@@ -10,8 +10,8 @@ using UnityEngine.EventSystems;
 public class BallLauncher : MonoBehaviour
 {
 
-    [SerializeField] public GameObject _ballPrefab;
-    public GameObject TargetParent;
+    [SerializeField] public Rigidbody2D _ballPrefab;
+    public GetDown TargetParent;
     private Vector2 _startPosition;
     private Vector3 _endPosition;
     private RowSpawner _blockSpawner;
@@ -19,16 +19,17 @@ public class BallLauncher : MonoBehaviour
     public GameObject Reset;
     private bool stop;
 
-    public List<GameObject> _ballsList = new List<GameObject>();
+
+    public List<Rigidbody2D> _ballsList = new List<Rigidbody2D>();
 
 
     public bool _canMove;
     public bool _canDrag;
 
     private RaycastHit2D ray;
-    public GameObject BallSprite;
-    public GameObject ExplosiveBulletSprite;
-
+    public Rigidbody2D BallSprite;
+    public Rigidbody2D ExplosiveBulletSprite;
+    public GameObject bottomWall;
     public float angleMin = 20f;
     public float angleMax = 160f;
 
@@ -50,8 +51,14 @@ public class BallLauncher : MonoBehaviour
     public int BallCountDefault;
     private bool PointerDown;
     private bool isDoubleUsed = false;
-    private bool isExplosiveUsed = false;
+    public bool isExplosiveUsed = false;
     [SerializeField] private bool shootable;
+    [SerializeField] GameObject ExplosiveBall;
+
+    [SerializeField] public GameObject DoubleBall;
+    public SpriteRenderer spriteRenderer;
+    //[SerializeField] Button btnX2Ball;
+    //[SerializeField] Button btnBoom;
 
     private void Awake()
     {
@@ -64,8 +71,8 @@ public class BallLauncher : MonoBehaviour
     {
         ballCountText.text = BallCount + "x";
         layerWall = LayerMask.GetMask("Wall");
-        this.spriteRenderer = GetComponent<SpriteRenderer>();
         BallCount = BallCountDefault;
+      
     }
 
 
@@ -103,6 +110,8 @@ public class BallLauncher : MonoBehaviour
         if (isExplosiveUsed == true)
         {
             ExplosiveBall.gameObject.SetActive(false);
+            isExplosiveUsed = false;
+
         }
         Reset.SetActive(false);
 
@@ -119,7 +128,7 @@ public class BallLauncher : MonoBehaviour
         ballCountText.text = "";
         Vector2 direction = ray.point - _startPosition;
         _ballsList.Clear();
-        TargetParent.GetComponent<GetDown>().newPos = new Vector2(TargetParent.transform.position.x, TargetParent.transform.position.y - 1f);
+        TargetParent.newPos = new Vector2(TargetParent.transform.position.x, TargetParent.transform.position.y - 1f);
         direction.Normalize();
         stop = false;
         for (int i = 0; i < BallCount; i++)
@@ -129,9 +138,9 @@ public class BallLauncher : MonoBehaviour
             {
                 break;
             }
-            GameObject myinst = Instantiate(_ballPrefab, gameObject.transform.position, Quaternion.identity, gameObject.transform);
+            Rigidbody2D myinst = Instantiate(_ballPrefab, gameObject.transform.position, Quaternion.identity, gameObject.transform);
             _ballsList.Add(myinst);
-            myinst.GetComponent<Rigidbody2D>().AddForce(transform.right * 5f);
+            myinst.AddForce(transform.right * 5f);
         }
         Reset.SetActive(true);
 
@@ -177,7 +186,6 @@ public class BallLauncher : MonoBehaviour
         //    return;
         //}
         
-
         if (!_canMove) return;
 
         if (PointerDown == true)
@@ -245,9 +253,6 @@ public class BallLauncher : MonoBehaviour
         }
     }
 
-    [SerializeField] public GameObject DoubleBall;
-
-
     public void DoubleBallPowerUp()
     {
         if (isDoubleUsed == false)
@@ -258,18 +263,12 @@ public class BallLauncher : MonoBehaviour
             ExplosiveBall.gameObject.SetActive(false);
             isDoubleUsed = true;
         }
-
     }
-
-    [SerializeField] GameObject ExplosiveBall;
-    public SpriteRenderer spriteRenderer;
-
-
     public void ExplosivePowerUp()
     {
         if (isExplosiveUsed == false)
         {
-            spriteRenderer.color = Color.red;
+            spriteRenderer.color = Color.blue;
             _ballPrefab = ExplosiveBulletSprite;
             BallCount = 1;
             ballCountText.text = BallCount + "x";
@@ -279,15 +278,11 @@ public class BallLauncher : MonoBehaviour
         }
     }
 
-    public GameObject bottomWall;
-
-
-
     public void ResetBall()
     {
         stop = true;
-
-        foreach (GameObject go in _ballsList)
+         
+        foreach (var go in _ballsList)
         {
             if (go != null)
             {

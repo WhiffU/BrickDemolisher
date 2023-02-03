@@ -8,20 +8,22 @@ using UnityEngine.UI;
 public class HudController : MonoBehaviour
 {
     public static HudController Instance { get; set; }
-    private int score = 0;
-    [SerializeField] private TMP_Text scoreText, highScoreText;
+    //private int score = 0;
+    //[SerializeField] private TMP_Text scoreText, highScoreText;
     [SerializeField] private Slider slider;
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private Button btnPause;
+
     private void Awake()
     {
         Instance = this;
     }
     private void Start()
     {
+        btnPause.onClick.AddListener(PauseGame);
+
         //score = 0;
         //scoreText.text = score.ToString();
-       
-
     }
     public void UpdateScore()
     {
@@ -62,12 +64,6 @@ public class HudController : MonoBehaviour
         Time.timeScale = 1;
 
     }
-    public void NextLevel()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
-    }
-    public void LevelSelect()
-    {
-        SceneManager.LoadScene("LevelSelector");
-    }
+    
+    
 }

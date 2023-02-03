@@ -11,7 +11,12 @@ public class ExplosiveBrick : MonoBehaviour
     public LayerMask LayerToHit;
     public GameObject ExplosionEffect;
     private bool exploded = false;
+    private BallLauncher ballLauncher;
 
+    private void Start()
+    {
+        ballLauncher = FindObjectOfType<BallLauncher>();
+    }
     void Explode()
     {
         Collider2D[] objects = Physics2D.OverlapCircleAll(transform.position, fieldOfImpact, LayerToHit);
@@ -35,10 +40,7 @@ public class ExplosiveBrick : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Explode();
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-         
+        ballLauncher.ReturnBall();
     }
     private void OnDrawGizmosSelected()
     {

@@ -8,14 +8,15 @@ public class LevelBlock : MonoBehaviour
     [SerializeField] private Color[] colorList;
     [SerializeField] private int hitsRemaining = 15;
     private SpriteRenderer spriteRenderer;
-    [SerializeField] private TMP_Text hitText;
+    [SerializeField] private TextMeshPro hitText;
+     
     [SerializeField] GameObject explosionEffect;
 
 
     private void Awake()
     {
         //spriteRenderer = GetComponent<SpriteRenderer>();
-        hitText = GetComponentInChildren<TMPro.TMP_Text>();
+        hitText = GetComponentInChildren<TMPro.TextMeshPro>();
         //_rb = GetComponentInChildren<Rigidbody2D>();
     }
     private void Start()
@@ -47,7 +48,7 @@ public class LevelBlock : MonoBehaviour
         }
         else 
         {
-            TargetParent.BlockNumber--;
+            NewLevelUnlock.BlockNumber--;
             Instantiate(explosionEffect, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }

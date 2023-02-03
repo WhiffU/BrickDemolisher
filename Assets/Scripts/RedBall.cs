@@ -16,10 +16,7 @@ public class RedBall : MonoBehaviour
 
     private void Start()
     {
-        _rb = GetComponent<Rigidbody2D>();
-        coll = GetComponent<Collider2D>();
         ballLauncher = FindObjectOfType<BallLauncher>();
-
     }
 
     private void FixedUpdate()
@@ -56,11 +53,8 @@ public class RedBall : MonoBehaviour
             Debug.Log("Boom!");
             Destroy(gameObject);
             CameraShaker.Instance.ShakeOnce(4, 4, 0.1f, 1f);
+            ResetState();
         }
-    }
-    private void Update()
-    {
-        ResetState();
     }
 
     private void ResetState()
@@ -73,5 +67,6 @@ public class RedBall : MonoBehaviour
         ballLauncher._ballPrefab = ballLauncher.BallSprite;
         ballLauncher.ballCountText.text = ballLauncher.BallCount + "x";
         ballLauncher.Reset.transform.gameObject.SetActive(false);
+        ballLauncher.ReturnBall();
     }
 }

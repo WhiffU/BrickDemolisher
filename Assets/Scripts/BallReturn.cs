@@ -5,9 +5,7 @@ using UnityEngine;
 public class BallReturn : MonoBehaviour
 {
     private BallLauncher _ballLauncher;
-    public static bool firstHit;
-
-
+    public bool firstHit;
 
     private void Start()
     {
@@ -22,9 +20,6 @@ public class BallReturn : MonoBehaviour
             firstHit= true;
         }
             Destroy(collision.collider.gameObject);
-        
-       
-        
     }
     private void Update()
     {
@@ -35,7 +30,7 @@ public class BallReturn : MonoBehaviour
                 _ballLauncher.ReturnBall();
                 firstHit= false;
             }
-        }
+        } 
     }
     
 }

@@ -10,7 +10,6 @@ public class GameOverTrigger : MonoBehaviour
     {
         if(collision.transform.tag == "Block")
         {
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             losePanel.SetActive(true);
             Debug.Log("You die!");
         }

@@ -7,7 +7,7 @@ public class LevelUnlocker : MonoBehaviour
 {
     [SerializeField] Button[] buttons;
     int unlockedLevelsNumber;
-
+ 
     private void Start()
     {
         if (!PlayerPrefs.HasKey("levelsUnlocked"))
@@ -20,7 +20,7 @@ public class LevelUnlocker : MonoBehaviour
         {
             buttons[i].interactable = false;
         }
-    }
+     }
 
     private void Update()
     {
