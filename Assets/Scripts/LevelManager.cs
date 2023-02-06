@@ -7,21 +7,21 @@ public class LevelManager : MonoBehaviour
 {
     public static int BlockNumber;
     public GameObject winPanel;
+    public GameObject losePanel;
     public GameObject endPanel;
-    public GameObject levelSelectPanel;
 
 
     public bool isWinning = false;
     public int currentLevelIndex;
     public GameObject[] levels;
-    public GameObject currentLevel;
+    private GameObject currentLevel;
     int numberOfUnlockedLevels;
     public int levelToUnlock;
     [SerializeField] private BallReturn ballReturn;
 
     private void Start()
     {
-        currentLevelIndex= PlayerPrefs.GetInt("levelIndex");
+        currentLevelIndex = PlayerPrefs.GetInt("levelIndex");
         CreateLevel();
     }
     private void Update()
@@ -33,19 +33,23 @@ public class LevelManager : MonoBehaviour
     {
         currentLevel = Instantiate(levels[currentLevelIndex]);
         currentLevel.transform.parent = gameObject.transform;
+        
     }
+    [SerializeField] private GetDown getDown;
     private void CompleteLevelCheck()
     {
         BlockNumber = GameObject.FindGameObjectsWithTag("Block").Length;
         if (BlockNumber == 0 && ballReturn.firstHit == true)
         {
+            winPanel.SetActive(true);
+            getDown.step = 0;
             UnlockLevel();
             Destroy(currentLevel);
-            winPanel.SetActive(true);
             currentLevelIndex += 1;
             levelToUnlock = currentLevelIndex;
             isWinning = true;
             CreateLevel();
+            currentLevel.transform.position = new Vector3(0, 8, 0);
         }
         //End game
         if (currentLevelIndex > 5)
@@ -55,7 +59,7 @@ public class LevelManager : MonoBehaviour
     }
     private void UnlockLevel()
     {
-        if(isWinning)
+        if (isWinning)
         {
             numberOfUnlockedLevels = PlayerPrefs.GetInt("levelsUnlocked");
             if (numberOfUnlockedLevels <= levelToUnlock)
@@ -64,5 +68,5 @@ public class LevelManager : MonoBehaviour
             }
         }
     }
-   
+
 }

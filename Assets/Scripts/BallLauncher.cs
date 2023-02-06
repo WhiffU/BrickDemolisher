@@ -90,14 +90,12 @@ public class BallLauncher : MonoBehaviour
     }
     public void ReturnBall()
     {
-
+        GetDown.Move = true;
         _canMove = true;
         _canDrag = true;
-        GetDown.Move = true;
         slider.transform.gameObject.SetActive(true);
         _ballsList.Clear();
         ballCountText.text = BallCount + "x";
-        //BallCount = 10;
         DoubleBall.gameObject.SetActive(true);
         ExplosiveBall.gameObject.SetActive(true);
         if (isDoubleUsed == true)
@@ -114,8 +112,6 @@ public class BallLauncher : MonoBehaviour
 
         }
         Reset.SetActive(false);
-
-
     }
     public IEnumerator LaunchBalls()
     {
