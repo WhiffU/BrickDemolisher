@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using EZCameraShake;
- 
+
 
 public class ExplosiveBrick : MonoBehaviour
 {
@@ -10,7 +10,6 @@ public class ExplosiveBrick : MonoBehaviour
     public float explosiveForce;
     public LayerMask LayerToHit;
     public GameObject ExplosionEffect;
-    private bool exploded = false;
     private BallLauncher ballLauncher;
 
     private void Start()
@@ -23,28 +22,18 @@ public class ExplosiveBrick : MonoBehaviour
 
         foreach (Collider2D obj in objects)
         {
-            exploded = true;
-            Destroy(obj.gameObject);
-
-            Debug.Log(obj);
-
-            //obj.gameObject.SetActive(false); 
+           Destroy(obj.gameObject);
         }
 
         CameraShaker.Instance.ShakeOnce(4, 4, 0.1f, 1f);
         GameObject ExplosionEffectIns = Instantiate(ExplosionEffect, transform.position, Quaternion.identity);
+        FindObjectOfType<AudioManager>().Play("Explode");
         Destroy(ExplosionEffectIns, 5f);
-        Destroy(gameObject);
 
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Explode();
-        ballLauncher.ReturnBall();
-    }
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, fieldOfImpact);
+        //ballLauncher.ReturnBall();
     }
 }

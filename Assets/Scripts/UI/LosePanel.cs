@@ -9,27 +9,34 @@ public class LosePanel : MonoBehaviour
 {
     [SerializeField] private Button btnRestart;
     [SerializeField] private Button btnGoToMainMenu;
-    [SerializeField] private Button btnQuitGame;
+    [SerializeField] private LevelManager levelManager;
+    [SerializeField] private Button[] skillButtons;
 
-    private LevelManager levelManager;
+
+
     private void Start()
     {
         btnRestart.onClick.AddListener(RestartLevel);
         btnGoToMainMenu.onClick.AddListener(GoToMainMenu);
-        btnQuitGame.onClick.AddListener(QuitGame);
+        //FindObjectOfType<AudioManager>().Play("Lose");
 
     }
-
-    private void QuitGame()
-    {
-        Application.Quit();
-    }
-
     public void RestartLevel()
     {
-        this.gameObject.SetActive(false);
-        levelManager.currentLevelIndex = PlayerPrefs.GetInt("levelIndex");
-
+        Debug.Log("restart level2!");
+        Destroy(levelManager.currentLevel);
+        levelManager.isLosing= false;
+        levelManager.CreateLevel();
+        gameObject.SetActive(false);
+        ResetSkill();
+    }
+    private void ResetSkill()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            Debug.Log("reset skills");
+            skillButtons[i].interactable = true;
+        }
     }
     public void GoToMainMenu()
     {

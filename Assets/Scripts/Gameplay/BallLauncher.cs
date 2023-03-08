@@ -19,7 +19,6 @@ public class BallLauncher : MonoBehaviour
     public GameObject Reset;
     private bool stop;
 
-
     public List<Rigidbody2D> _ballsList = new List<Rigidbody2D>();
 
 
@@ -29,13 +28,13 @@ public class BallLauncher : MonoBehaviour
     private RaycastHit2D ray;
     public Rigidbody2D BallSprite;
     public Rigidbody2D ExplosiveBulletSprite;
+    public Rigidbody2D LaserBallPrefab;
     public GameObject bottomWall;
     public float angleMin = 15f;
     public float angleMax = 165f;
 
     LayerMask layerWall;
-    LayerMask visualBallLayer;
-
+ 
     public TMP_Text ballCountText;
     public GameObject ballCountBox;
     [SerializeField] private LayerMask wallLayer;
@@ -55,14 +54,8 @@ public class BallLauncher : MonoBehaviour
     public bool isFreezingUsed = false;
 
     [SerializeField] private bool shootable;
-    [SerializeField] GameObject ExplosiveBall;
 
-    [SerializeField] public GameObject DoubleBall;
-    [SerializeField] private SkillManager skillManager;
-
-
-
-
+ 
     private void Awake()
     {
         _blockSpawner = FindObjectOfType<RowSpawner>();
@@ -75,6 +68,7 @@ public class BallLauncher : MonoBehaviour
         ballCountText.text = BallCount + " xBalls";
         layerWall = LayerMask.GetMask("Wall");
         BallCount = BallCountDefault;
+ 
     }
     public void EndDrag()
     {
@@ -99,19 +93,16 @@ public class BallLauncher : MonoBehaviour
         ballCountBox.SetActive(true);
         if (isDoubleUsed == true)
         {
-            skillManager.btnX2Ball.interactable = false;
             BallCount = BallCount / 2;
             ballCountText.text = BallCount.ToString() + "x";
             isDoubleUsed = false;
         }
         if (isExplosiveUsed == true)
         {
-            skillManager.btnBoom.interactable = false;
             isExplosiveUsed = false;
         }
         if (isFreezingUsed==true)
         {
-            skillManager.btnFreezing.interactable = false;
             isFreezingUsed = false;
         }
         Reset.SetActive(false);
@@ -121,7 +112,7 @@ public class BallLauncher : MonoBehaviour
     [SerializeField] private GameObject itemSlot;
     public IEnumerator LaunchBalls()
     {
-
+        FindObjectOfType<AudioManager>().Play("Launch");
         slider.value = 90;
         slider.transform.gameObject.SetActive(false);
         itemSlot.SetActive(false);
@@ -158,7 +149,7 @@ public class BallLauncher : MonoBehaviour
     public void PointerD()
     {
         PointerDown = true;
-    }
+     }
     public void PointerUp()
     {
         PointerDown = false;
@@ -184,6 +175,7 @@ public class BallLauncher : MonoBehaviour
 
     private void Update()
     {
+        //Avoid UI CLICK 
         //if (EventSystem.current.IsPointerOverGameObject())
         //{
         //    return;

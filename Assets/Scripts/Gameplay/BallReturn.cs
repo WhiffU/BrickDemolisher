@@ -15,6 +15,7 @@ public class BallReturn : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        FindObjectOfType<AudioManager>().Play("TouchBottom");
         if (collision.transform.tag == "Ball")
         { 
             firstHit= true;

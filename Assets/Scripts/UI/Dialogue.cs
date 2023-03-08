@@ -12,11 +12,10 @@ public class Dialogue : MonoBehaviour
     public string[] lines;
     public float textSpeed;
     public BallLauncher ballLauncher;
-    public GameObject spawnerParent;
     public Button btnPause;
-    public Button btnX2Balls;
-    public Button btnBoom;
-    public GameObject slider;
+    //public GameObject slider;
+    public GameObject panelSkill;
+
 
 
     private int index;
@@ -26,11 +25,9 @@ public class Dialogue : MonoBehaviour
         textComponent.text = string.Empty;
         StartDialogue();
         ballLauncher.GetComponent<BallLauncher>()._canMove = false;
-        spawnerParent.SetActive(false);
         btnPause.interactable= false;
-        btnX2Balls.interactable= false;
-        btnBoom.interactable= false;
-        slider.SetActive(false);
+        //slider.SetActive(false);
+        panelSkill.SetActive(false);
 
     }
 
@@ -74,11 +71,9 @@ public class Dialogue : MonoBehaviour
         {
             ballLauncher.GetComponent<BallLauncher>()._canMove = true;
             gameObject.SetActive(false);
-            spawnerParent.SetActive(true);
             btnPause.interactable = true;
-            btnX2Balls.interactable = true;
-            btnBoom.interactable = true;
-            slider.SetActive(true);
+            //slider.SetActive(true);
+            panelSkill.SetActive(true);
             return;
         }
        

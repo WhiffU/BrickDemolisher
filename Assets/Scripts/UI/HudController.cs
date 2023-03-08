@@ -34,10 +34,12 @@ public class HudController : MonoBehaviour
     }
     public void EndGame()
     {
+        FindObjectOfType<AudioManager>().Play("UI");
         SceneManager.LoadScene("MainMenu");
     }
     public void QuitGame()
     {
+        FindObjectOfType<AudioManager>().Play("UI");
         Application.Quit();
     }
     public void PauseGame()
@@ -45,26 +47,6 @@ public class HudController : MonoBehaviour
         Time.timeScale = 0;
         pauseMenu.SetActive(true);
         //scoreText.gameObject.SetActive(false);
-
+        FindObjectOfType<AudioManager>().Play("UI");
     }
-    public void ResumeGame()
-    {
-        Time.timeScale = 1;
-        pauseMenu.SetActive(false); 
-    }
-    public void RestartGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        Time.timeScale = 1;
-        pauseMenu.SetActive(false);
-
-    }
-    public void GoToHome()
-    {
-        SceneManager.LoadScene("MainMenu");
-        Time.timeScale = 1;
-
-    }
-    
-    
 }

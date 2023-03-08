@@ -23,16 +23,14 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField] private TMP_Text cash;
     [SerializeField] private TMP_Text cashSkill;
+    [SerializeField] private TMP_Text cashText;
+
 
 
 
 
     private void Start()
     {
-        cash.text = DataManager.Cash.ToString();
-        cashSkill.text = DataManager.Cash.ToString();
-
-
         btnPlay.onClick.AddListener(GoToGameplay);
         btnShop.onClick.AddListener(OpenShop);
         btnSkin.onClick.AddListener(OpenSkin);
@@ -42,38 +40,43 @@ public class MainMenu : MonoBehaviour
         btnReturnFromSkin.onClick.AddListener(ReturnFromSkin);
 
     }
+    private void Update()
+    {
+        cash.text = DataManager.Cash.ToString();
+        cashText.text = DataManager.Cash.ToString();
+        cashSkill.text = DataManager.Cash.ToString();
+    }
     private void OpenShop()
     {
         panelShop.SetActive(true);
-        panelShop.transform.DOMoveY(390, 1f);
+        panelShop.transform.DOLocalMoveY(0, 0.5f);
     }
     private void OpenSkin()
     {
         panelSkin.SetActive(true);
-        panelSkin.transform.DOMoveY(390, 1f);
+        panelSkin.transform.DOLocalMoveY(0, 0.5f);
     }
 
     public void GoToGameplay()
     {
         panelLevel.SetActive(true);
-        panelLevel.transform.DOMoveY(390, 1f);
+        panelLevel.transform.DOLocalMoveY(0, 0.5f);
     }
     public void ReturnFromLevel()
     {
-        panelLevel.transform.DOMoveY(-500, 1f);
-        //panelLevel.SetActive(false);
+        panelLevel.transform.DOLocalMoveY(-2400, 0.5f);        
 
     }
     public void ReturnFromShop()
     {
         //panelShop.SetActive(false);
-        panelShop.transform.DOMoveY(-500, 1f);
+        panelShop.transform.DOLocalMoveY(-2400, 0.5f);
 
     }
     public void ReturnFromSkin()
     {
         //panelSkin.SetActive(false);
-        panelSkin.transform.DOMoveY(-500, 1f);
+        panelSkin.transform.DOLocalMoveY(-2400, 0.5f);
 
     }
 }

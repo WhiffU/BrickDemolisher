@@ -30,7 +30,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -46,7 +45,6 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -76,8 +74,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 7482667652216324306, guid: 1afa8909e122fa9468c0f025cef9d146, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.06855869, a: 0.95686275}
+  m_Sprite: {fileID: 21300000, guid: dab4ba67d2d0aab4ab5f2b2dfec707eb, type: 3}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.95686275}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -99,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22bc56c2df0dbf245bfc2690de016616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldOfImpact: 0.6
+  fieldOfImpact: 1
   explosiveForce: 300
   LayerToHit:
     serializedVersion: 2
@@ -143,7 +141,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 2.67, y: 3.44}
     newSize: {x: 0.5, y: 0.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 1

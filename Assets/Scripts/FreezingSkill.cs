@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EZCameraShake;
+
 
 public class FreezingSkill : MonoBehaviour
 {
@@ -8,6 +10,8 @@ public class FreezingSkill : MonoBehaviour
     public LayerMask LayerToHit;
     public Animator animator;
     public LevelBlock levelBlock;
+    public GameObject ExplosionEffect;
+
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -19,22 +23,19 @@ public class FreezingSkill : MonoBehaviour
         foreach(Collider2D obj in objects)
         {
             //DAMAGE OUTPUT
-            obj.GetComponent<LevelBlock>().hitsRemaining -= 4;
-            
-
+            obj.GetComponent<LevelBlock>().hitsRemaining -= 1;
         }
+        CameraShaker.Instance.ShakeOnce(4, 4, 0.1f, 1f);
+        GameObject ExplosionEffectIns = Instantiate(ExplosionEffect, transform.position, Quaternion.identity);
+        FindObjectOfType<AudioManager>().Play("IceExplode");
+
+        Destroy(ExplosionEffectIns, 3f);
     }
      private void Awake()
     {
         Explode();
-        animator.Play("Skill3");
+        //animator.Play("Skill3");
     }
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, fieldOfImpact);
-    }
-
     public void EndSkill()
     {
         Destroy(gameObject);

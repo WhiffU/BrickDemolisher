@@ -15,7 +15,6 @@ public class winPanel : MonoBehaviour
     {
         btnNextLevel.onClick.AddListener(NextLevel);
         btnGoToMainMenu.onClick.AddListener(GoToMainMenu);
-
     }
     public void NextLevel()
     {

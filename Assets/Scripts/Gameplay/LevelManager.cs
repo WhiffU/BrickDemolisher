@@ -13,57 +13,65 @@ public class LevelManager : MonoBehaviour
     //public GameObject losePanel;
     public GameObject endPanel;
 
-
     public bool isWinning = false;
+    public bool isLosing = false;
+
     public int currentLevelIndex;
     public GameObject[] levels;
-    private GameObject currentLevel;
+    public GameObject currentLevel;
     int numberOfUnlockedLevels;
     public int levelToUnlock;
     [SerializeField] private BallReturn ballReturn;
     [SerializeField] private BallLauncher ballLauncher;
-
+    [SerializeField] private Dialogue dialogueBox;
+    string url = "Skill";
     private void Start()
     {
         currentLevelIndex = PlayerPrefs.GetInt("levelIndex");
         CreateLevel();
+        LoadSkill();
+        if (currentLevelIndex == 0)
+        {
+            dialogueBox.gameObject.SetActive(true);
+            Debug.Log("dialouge");
+        }
     }
+    private void LoadSkill()
+    {
+        GameObject go = Resources.Load<GameObject>(url + PlayerPrefs.GetInt("skillName"));
+    }
+
     private void Update()
     {
         CompleteLevelCheck();
-
     }
 
-    private void CreateLevel()
+    public void CreateLevel()
     {
         currentLevel = Instantiate(levels[currentLevelIndex]);
         currentLevel.transform.parent = gameObject.transform;
-        btnFreezing.interactable = true;
-        btnX2Ball.interactable = true;
-        btnBomb.interactable = true;
     }
-    private void CompleteLevelCheck()
+    public void CompleteLevelCheck()
     {
         BlockNumber = GameObject.FindGameObjectsWithTag("Block").Length;
         BallNumber = GameObject.FindGameObjectsWithTag("Ball").Length;
-        if (currentLevelIndex > 6)
+       
+        //MaxLevel
+        if (currentLevelIndex >= 6)
         {
-            Debug.Log("hello!");
             Destroy(currentLevel);
             Destroy(winPanel);
-            //winPanel.SetActive(false);
             endPanel.SetActive(true);
         }
-        if (BlockNumber == 0)
+        if (BlockNumber == 0 && !isLosing)
         {
-            DataManager.Cash += 50;
-            Debug.Log(DataManager.Cash);
-            if (BallNumber != 0)
+            if (BallNumber != 0 )
             {
                 if (ballReturn.firstHit && ballLauncher.transform.childCount == 0)
                 {
                     Debug.Log("new level!");
                     winPanel.SetActive(true);
+                    FindObjectOfType<AudioManager>().Play("Win");
                     UnlockLevel();
                     Destroy(currentLevel);
                     currentLevelIndex += 1;
@@ -71,35 +79,38 @@ public class LevelManager : MonoBehaviour
                     isWinning = true;
                     CreateLevel();
                     currentLevel.gameObject.transform.position = new Vector3(0, 9.5f, 0);
+                    DataManager.Cash += 100;
+                    ResetSkill();
                 }
             }
             else
             {
-                //Invoke("callWinPanel", 0.5f);
                 winPanel.SetActive(true);
+                FindObjectOfType<AudioManager>().Play("Win");
                 UnlockLevel();
                 Destroy(currentLevel);
                 currentLevelIndex += 1;
                 levelToUnlock = currentLevelIndex;
                 isWinning = true;
                 CreateLevel();
-                currentLevel.gameObject.transform.position = new Vector3(0, 8.5f, 0);
+                DataManager.Cash += 100;
+                ResetSkill();
+                Debug.Log(DataManager.Cash);
+                currentLevel.gameObject.transform.position = new Vector3(0, 9f, 0);
             }
-
         }
-        //End game
-
     }
-    [SerializeField] private Button btnFreezing;
-    [SerializeField] private Button btnX2Ball;
-    [SerializeField] private Button btnBomb;
+    [SerializeField] private Button[] skillButtons;
 
-
-    private void callWinPanel()
+    private void ResetSkill()
     {
-        winPanel.SetActive(true);
-
+        for (int i = 0; i < 4; i++)
+        {
+            Debug.Log("reset skills");
+            skillButtons[i].interactable = true;
+        }
     }
+
     private void UnlockLevel()
     {
         if (isWinning)

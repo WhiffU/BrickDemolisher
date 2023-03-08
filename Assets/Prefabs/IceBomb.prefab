@@ -117,12 +117,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6822dc3225dcef04f9786b06f79f7807, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldOfImpact: 6
+  fieldOfImpact: 4
   LayerToHit:
     serializedVersion: 2
     m_Bits: 1024
   animator: {fileID: 7855712770425940143}
   levelBlock: {fileID: 1824753090, guid: 38cbb9701701aad4c917f6a46a5d3bbf, type: 3}
+  ExplosionEffect: {fileID: 100002, guid: 4bf22a1d8d9e7724b9af67921436851d, type: 3}
   ballLauncher: {fileID: 7378701796970158878, guid: 450f8936019951d4598e3c72a0b90c2b, type: 3}
 --- !u!58 &2703628425846905814
 CircleCollider2D:
@@ -139,4 +140,4 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1.5
+  m_Radius: 1

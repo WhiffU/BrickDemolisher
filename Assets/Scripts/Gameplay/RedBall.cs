@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using EZCameraShake;
 
 
@@ -33,7 +32,7 @@ public class RedBall : MonoBehaviour
 
         foreach (Collider2D obj in objects)
         {
-            obj.GetComponent<LevelBlock>().hitsRemaining -= 2;
+            obj.GetComponent<LevelBlock>().hitsRemaining -= 5;
         }
         GameObject ExplosionEffectIns = Instantiate(ExplosionEffect, transform.position, Quaternion.identity);
         Destroy(ExplosionEffectIns, 2f);
@@ -42,6 +41,8 @@ public class RedBall : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        FindObjectOfType<AudioManager>().Play("Firebolt");
+
         if (collision.gameObject.tag == "Block")
         {
             ExplodeBall();

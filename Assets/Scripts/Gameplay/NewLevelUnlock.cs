@@ -10,7 +10,11 @@ public class NewLevelUnlock : MonoBehaviour
     public bool isWin=false;
     public int levelToUnlock;
     int numberOfUnlockedLevels;
-     private void Update()
+    private void Start()
+    {
+        //FindObjectOfType<AudioManager>().Play("GameTheme");
+    }
+    private void Update()
     {
         BlockNumber = GameObject.FindGameObjectsWithTag("Block").Length;
         if(BlockNumber== 0)

@@ -29,6 +29,10 @@ public class LevelBlock : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         hitsRemaining--;
+        FindObjectOfType<AudioManager>().Play("Hurt");
+        FindObjectOfType<AudioManager>().Play("Hit");
+
+
     }
     private void Update()
     {
@@ -41,6 +45,7 @@ public class LevelBlock : MonoBehaviour
         {
             NewLevelUnlock.BlockNumber--;
             Instantiate(explosionEffect, transform.position, Quaternion.identity);
+            FindObjectOfType<AudioManager>().Play("Die");
             Destroy(gameObject);
         }
     }
